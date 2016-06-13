@@ -25,7 +25,7 @@
 #define JBAXIWRAPPER_LIBRARYNAME                     "libjbaxiwrapper.so"
 #define JBAXIWRAPPER_CALLING_CONVENTION
 #else
-#error CPCLIImplementationBAXI: unable to determine dynamic loading
+#error unable to determine dynamic loading
 #endif
 
 
@@ -37,8 +37,14 @@ int32_t main( int32_t argc, char** argv )
     //ds error buffer
     JBAXIWRAPPER_T_ERRORINFORMATION chError = 0;
 
+    //ds buffer library path
+    std::string strPathLibraryToLoad( "" );
+    std::cout << "(main) specify library to load (absolute path): "; std::cin >> strPathLibraryToLoad;
+
     //ds attempt to load the library in the current path
-    JBAXIWRAPPER_T_LIBHANDLE m_pLibraryBAXIWrapperJNI = JBAXIWRAPPER_LOADLIBRARY( JBAXIWRAPPER_LIBRARYNAME );
+    JBAXIWRAPPER_T_LIBHANDLE m_pLibraryBAXIWrapperJNI = JBAXIWRAPPER_LOADLIBRARY( strPathLibraryToLoad.c_str( ) );
+    std::cout << "(main) loading library: " << strPathLibraryToLoad << std::endl;
+
     chError = JBAXIWRAPPER_GETERROR( );
     if( JBAXIWRAPPER_IS_ERROR( chError ) )
     {
