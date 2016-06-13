@@ -1,6 +1,22 @@
 #include <iostream>
+#include <string>
 
-
+#ifdef _MSC_VER
+    #if _MSC_VER >= 1600
+        #include <cstdint>
+    #else
+        typedef __int8              int8_t;
+        typedef __int16             int16_t;
+        typedef __int32             int32_t;
+        typedef __int64             int64_t;
+        typedef unsigned __int8     uint8_t;
+        typedef unsigned __int16    uint16_t;
+        typedef unsigned __int32    uint32_t;
+        typedef unsigned __int64    uint64_t;
+    #endif
+#elif __GNUC__ >= 3
+    #include <cstdint>
+#endif
 
 #if defined(WIN32) || defined(_WIN32)
 #include <Windows.h>
@@ -49,7 +65,7 @@ int32_t main( int32_t argc, char** argv )
     if( JBAXIWRAPPER_IS_ERROR( chError ) )
     {
         //ds log
-        std::cout << "(main) unable to load library: " << JBAXIWRAPPER_LIBRARYNAME << std::endl;
+        std::cout << "(main) unable to load library: " << strPathLibraryToLoad << std::endl;
         std::cout << "(main) error information: " << chError << std::endl;
     }
     else
